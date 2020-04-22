@@ -1,9 +1,18 @@
 ---
 title: "Steak Preferences in the US"
-subtitle: "Summary Report for the _**Mountain**_ Region"
+subtitle: "Summary Report for the `r params$region` Region"
 author: "Author: Michelle Frost"
 date: "`r format(Sys.Date(), '%A, %B %d, %Y')`"
 output: html_document
+params:
+  region: 
+    label:"Region:"
+    value: Mountain
+    input: select
+    choices: ["East North Central","East South Central", 
+              "Middle Atlantic","Mountain", "New England", 
+              "Pacific","South Atlantic", "West North Central",
+              "West South Central"]
 ---
 
 ```{r setup, include=FALSE}
@@ -49,10 +58,10 @@ Steak"](https://fivethirtyeight.com/features/how-americans-like-their-steak/) ar
 the R package [`fivethirtyeight`](https://cran.r-
 project.org/web/packages/fivethirtyeight/index.html).
 Using this dataset, this article summarizes the steak
-preferences for the _**Mountain**_ Region of the
+preferences for the `r params$region` Region of the
 United States by gender.
 
-For our summary presented here, a subset of the original steak survey was extracted to only include responses with no missing data and only included respondents from the _**Mountain**_ region of the US. The data subset used for our summary had `r nrow(sdat)` respondents.
+For our summary presented here, a subset of the original steak survey was extracted to only include responses with no missing data and only included respondents from the `r params$region` region of the US. The data subset used for our summary had `r nrow(sdat)` respondents.
 
 ## Demographic Summary Tables
 
@@ -170,13 +179,13 @@ mtb2 %>%
 ```
 ## Steak Preparation Preference by Gender
 
-Finally, here is a breakdown of the `r nrow(sdat)` survey respondents for the _**Mountain**_ region of the US on how they prefer their steak to be prepared by gender.
+Finally, here is a breakdown of the `r nrow(sdat)` survey respondents for the `r params$region` region of the US on how they prefer their steak to be prepared by gender.
 
 ```{r}
 ggplot(sdat, aes(x = steak_prep, fill = female)) +
   geom_bar(position="dodge",colour="black") +
   ggtitle(paste0("Steak Preference by Gender: ",
-          "Mountain"," Region")) +
+          params$region," Region")) +
   xlab("Steak Preparation Preference") +
   ylab("Number of Respondents") +
   scale_fill_manual(values=c("skyblue","palevioletred"),
